@@ -53,26 +53,26 @@ export default function VideoCard({ video, width }: VideoCardProps) {
   return (
     <View style={[styles.container, { width }]}>
       <View style={[styles.videoContainer, { backgroundColor: video.backgroundColor }]}>
-        {showThumbnail ? (
+        {Platform.OS !== 'web' && (
+          <Video
+            ref={videoRef}
+            style={styles.video}
+            source={{ uri: video.video }}
+            useNativeControls={false}
+            resizeMode={ResizeMode.COVER}
+            isLooping={false}
+            onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+          />
+        )}
+
+        {showThumbnail && (
           <Image
             source={{ uri: video.thumbnail }}
             style={styles.thumbnail}
             resizeMode="cover"
           />
-        ) : (
-          Platform.OS !== 'web' && (
-            <Video
-              ref={videoRef}
-              style={styles.video}
-              source={{ uri: video.video }}
-              useNativeControls={false}
-              resizeMode={ResizeMode.COVER}
-              isLooping={false}
-              onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
-            />
-          )
         )}
-        
+
         <TouchableOpacity style={styles.playButton} onPress={handlePlayPause}>
           <View style={styles.playButtonBackground}>
             {isPlaying ? (
@@ -101,19 +101,28 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     position: 'relative',
   },
-  thumbnail: {
-    width: '100%',
-    height: '100%',
-  },
   video: {
     width: '100%',
     height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 0,
+  },
+  thumbnail: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    zIndex: 1,
   },
   playButton: {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: [{ translateX: -25 }, { translateY: -25 }],
+    zIndex: 2,
   },
   playButtonBackground: {
     width: 50,
@@ -128,6 +137,7 @@ const styles = StyleSheet.create({
     bottom: 12,
     left: 12,
     right: 12,
+    zIndex: 2,
   },
   userName: {
     color: '#fff',
