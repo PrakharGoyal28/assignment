@@ -1,5 +1,12 @@
 import { Tabs } from 'expo-router';
-import { Chrome as Home, Grid3x3 as Grid3X3, Camera, ShoppingCart, User } from 'lucide-react-native';
+import {
+  Chrome as Home,
+  Grid3x3 as Grid3X3,
+  Camera,
+  ShoppingCart,
+  User,
+} from 'lucide-react-native';
+import { TouchableOpacity } from 'react-native';
 
 export default function TabLayout() {
   return (
@@ -20,14 +27,13 @@ export default function TabLayout() {
           fontSize: 12,
           fontWeight: '500',
         },
-      }}>
+      }}
+    >
       <Tabs.Screen
         name="index"
         options={{
           title: 'Home',
-          tabBarIcon: ({ size, color }) => (
-            <Home size={size} color={color} />
-          ),
+          tabBarIcon: ({ size, color }) => <Home size={size} color={color} />,
         }}
       />
       <Tabs.Screen
@@ -37,14 +43,18 @@ export default function TabLayout() {
           tabBarIcon: ({ size, color }) => (
             <Grid3X3 size={size} color={color} />
           ),
+          tabBarButton: (props) => (
+            <TouchableOpacity {...props} onPress={() => {}} />
+          ),
         }}
       />
       <Tabs.Screen
         name="posts"
         options={{
-          title: 'Posts',
-          tabBarIcon: ({ size, color }) => (
-            <Camera size={size} color={color} />
+          title: 'posts',
+          tabBarIcon: ({ size, color }) => <Camera size={size} color={color} />,
+          tabBarButton: (props) => (
+            <TouchableOpacity {...props} onPress={() => {}} />
           ),
         }}
       />
@@ -52,8 +62,9 @@ export default function TabLayout() {
         name="tryon"
         options={{
           title: 'Try-on',
-          tabBarIcon: ({ size, color }) => (
-            <User size={size} color={color} />
+          tabBarIcon: ({ size, color }) => <User size={size} color={color} />,
+          tabBarButton: (props) => (
+            <TouchableOpacity {...props} onPress={() => {}} />
           ),
         }}
       />
@@ -63,6 +74,9 @@ export default function TabLayout() {
           title: 'Cart',
           tabBarIcon: ({ size, color }) => (
             <ShoppingCart size={size} color={color} />
+          ),
+          tabBarButton: (props) => (
+            <TouchableOpacity {...props} onPress={() => {}} />
           ),
         }}
       />
